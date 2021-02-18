@@ -51,6 +51,8 @@ RUN curl -L -o /tmp/azcopy.tgz -s https://aka.ms/downloadazcopy-v10-linux \
   && tar -zxf /tmp/azcopy.tgz -C /tmp \
   && mv /tmp/azcopy_linux_amd64_*/azcopy /usr/local/bin/ \
   && chmod 755 /usr/local/bin/azcopy
+# fixes azure-cli dependencies
+RUN pip3 install --force-reinstall requests
 
 ARG USERNAME
 ARG UID
