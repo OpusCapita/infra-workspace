@@ -52,7 +52,7 @@ RUN curl -L -o /tmp/azcopy.tgz -s https://aka.ms/downloadazcopy-v10-linux \
   && mv /tmp/azcopy_linux_amd64_*/azcopy /usr/local/bin/ \
   && chmod 755 /usr/local/bin/azcopy
 # fixes azure-cli dependencies
-RUN python3 -m pip install --upgrade requests
+RUN python3 -m pip install --upgrade requests; python3 -m pip install ansible-modules-hashivault
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bsdmainutils
 
 ARG USERNAME
