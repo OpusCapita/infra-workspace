@@ -1,0 +1,21 @@
+#!/bin/bash
+
+pushd $WORKDIR/ansible/ > /dev/null
+
+function sha1key() {
+  A=$(echo -n "$1" | sha1sum)
+  echo -n ${A:0:5}
+}
+
+function cache_prefix() {
+  echo -n $(sha1key "azure_rm_cache")
+  echo -n s_
+  echo -n $(sha1key "$PWD/$ANSIBLE_INVENTORY")
+}
+
+file=.cache/ansible_inventory_azure_rm_cache_$(cache_prefix)
+
+echo Removing: ansible/$file
+rm -f $file
+
+popd > /dev/null

@@ -1,0 +1,5 @@
+echo Subscription:
+azashow
+echo
+echo VMs:
+az vm list-ip-addresses | jq -r '.[] | "\(.virtualMachine.name) \(.virtualMachine.network.privateIpAddresses[0])"' | column -t -s' '

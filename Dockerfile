@@ -53,6 +53,7 @@ RUN curl -L -o /tmp/azcopy.tgz -s https://aka.ms/downloadazcopy-v10-linux \
   && chmod 755 /usr/local/bin/azcopy
 # fixes azure-cli dependencies
 RUN python3 -m pip install --upgrade requests
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bsdmainutils
 
 ARG USERNAME
 ARG UID
