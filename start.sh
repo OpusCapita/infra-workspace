@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash 
 
 export MY_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+export MY_HOMEPATH="$( cd >/dev/null 2>&1 && pwd )"
 export MY_PARENT=$(dirname "${MY_PATH}")
 export CONTAINER_NAME="${MY_PARENT}"
 

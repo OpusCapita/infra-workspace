@@ -2,18 +2,19 @@ version: '2.1'
 services:
   main:
     environment:
-      USERNAME: "$USER"
+      USERNAME: "$USERNAME"
       SSH_AUTH_SOCK: /ssh-agent
       PATH: "$MY_PATH/bin:$MY_PATH/../bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       WORKDIR: "$MY_PATH/../"
     build:
       context: .
       args:
-        USERNAME: "$USER"
+        USERNAME: "$USERNAME"
         UID: "${xUID:?run only with a ./start.sh. because variables are defined there.}"
         GID: "${xGID:?run only with a ./start.sh. because variables are defined there.}"
     volumes:
-    - "~:/home/$USER"
-    - "$SSH_AUTH_SOCK:/ssh-agent"
+    - "~:$MY_HOMEPATH"
+    #- "$SSH_AUTH_SOCK:/ssh-agent"
+    - "/c:/c"
     - "/etc/hosts:/etc/hosts"
     container_name: "${CONTAINER_NAME:?run only with a ./start.sh. because variables are defined there.}"
