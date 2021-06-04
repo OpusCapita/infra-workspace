@@ -4,7 +4,7 @@ services:
     environment:
       USERNAME: "$USERNAME"
       SSH_AUTH_SOCK: /ssh-agent
-      PATH: "$MY_PATH/bin:$MY_PATH/../bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      PATH: "$MY_PATH/bin:$MY_PATH/../bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$MY_HOMEPATH/.local/bin"
       WORKDIR: "$MY_PATH/../"
       EDITOR: nano
     build:
