@@ -16,6 +16,6 @@ services:
     volumes:
     - "~:$MY_HOMEPATH"
     - "$SSH_AUTH_SOCK:/ssh-agent"
-    #- "/c:/c"
+    - "/mnt/c:/mnt/c"
     - "/etc/hosts:/etc/hosts"
     container_name: "${CONTAINER_NAME:?run only with a ./start.sh. because variables are defined there.}"
