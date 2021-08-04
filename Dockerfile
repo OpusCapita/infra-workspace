@@ -55,6 +55,14 @@ RUN curl -L -o /tmp/azcopy.tgz -s https://aka.ms/downloadazcopy-v10-linux \
 # fixes azure-cli dependencies
 RUN python3 -m pip install --upgrade requests; python3 -m pip install ansible-modules-hashivault
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bsdmainutils
+RUN SOPS_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/sops/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
+  && curl -LO https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb \
+  && dpkg -i sops_${SOPS_VERSION}_amd64.deb && rm sops_${SOPS_VERSION}_amd64.deb
+RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/releases" | jq -r .[0].tag_name) \
+  && curl -LO https://github.com/FiloSottile/age/releases/download/${AGE_VERSION}/age-${AGE_VERSION}-linux-amd64.tar.gz \
+  && tar -zxf age-${AGE_VERSION}-linux-amd64.tar.gz -C /tmp \
+  && mv /tmp/age/age* /usr/local/bin/ \
+  && rm -rf /tmp/age
 
 ARG USERNAME
 ARG UID
