@@ -1,11 +1,5 @@
 FROM ubuntu:20.04
 
-RUN sed -i '/history-search-backward/s/^# //g' /etc/inputrc \
-  && sed -i '/history-search-forward/s/^# //g' /etc/inputrc \
-  && echo "alias mc='mc -b'" > /etc/profile.d/00-aliases.sh \
-  && sed -i '/%sudo/d' /etc/sudoers \
-  && echo "%sudo   ALL=(ALL:ALL)  NOPASSWD: ALL" >> /etc/sudoers
-
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   sudo \
@@ -37,6 +31,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   python3-pymysql \
   bsdmainutils \
   git
+RUN sed -i '/history-search-backward/s/^# //g' /etc/inputrc \
+  && sed -i '/history-search-forward/s/^# //g' /etc/inputrc \
+  && echo "alias mc='mc -b'" > /etc/profile.d/00-aliases.sh \
+  && sed -i '/%sudo/d' /etc/sudoers \
+  && echo "%sudo   ALL=(ALL:ALL)  NOPASSWD: ALL" >> /etc/sudoers
 RUN pip3 install --upgrade cryptography \
   && pip3 install --upgrade azure-cli \
   && python3 -m easy_install --upgrade pyOpenSSL \
