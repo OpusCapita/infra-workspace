@@ -63,15 +63,15 @@ RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/re
   && tar -zxf age-${AGE_VERSION}-linux-amd64.tar.gz -C /tmp \
   && mv /tmp/age/age* /usr/local/bin/ \
   && rm -rf /tmp/age
-RUN YQ_VERSION=$(curl --silent "https://api.github.com/repos/mikefarah/yq/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
-  && curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64 -o /usr/bin/yq && chmod +x /usr/bin/yq
+RUN pip3 install pymysql
+RUN pip3 install netaddr
 
 ARG USERNAME
 ARG UID
 ARG GID
-RUN sed -i '/history-search-backward/s/^# //g' /etc/inputrc \
-  && sed -i '/history-search-forward/s/^# //g' /etc/inputrc \
-  && groupadd -g $GID $USERNAME \
+RUN sed -i '/history-search-backward/s/^# //g' /etc/inputrc ; \
+  sed -i '/history-search-forward/s/^# //g' /etc/inputrc ; \
+  groupadd -g $GID $USERNAME \
   && useradd -d /home/$USERNAME -m -s /bin/bash -g $GID -u $UID $USERNAME \
   && usermod -aG sudo $USERNAME
 
