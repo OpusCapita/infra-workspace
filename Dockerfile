@@ -27,6 +27,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   ipcalc \
   sshpass \
   vim \
+  bsdmainutils \
   && echo "alias mc='mc -b'" > /etc/profile.d/00-aliases.sh \
   && sed -i '/%sudo/d' /etc/sudoers \
   && echo "%sudo   ALL=(ALL:ALL)  NOPASSWD: ALL" >> /etc/sudoers \
@@ -37,11 +38,7 @@ RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key
   && apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
   && DEBIAN_FRONTEND=noninteractive apt update \
   && DEBIAN_FRONTEND=noninteractive apt -y install kubectl git terraform
-RUN pip3 install ansible
-RUN pip3 install --upgrade cryptography \
-  && pip3 install --upgrade azure-cli \
-  && python3 -m easy_install --upgrade pyOpenSSL \
-  && curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 RUN PACKER_VERSION=$(curl -s https://releases.hashicorp.com/packer/ | grep packer_ | cut -d / -f 3 | head -n 1) \
   && curl -O https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
   && unzip -d /usr/local/bin packer_${PACKER_VERSION}_linux_amd64.zip
@@ -52,9 +49,6 @@ RUN curl -L -o /tmp/azcopy.tgz -s https://aka.ms/downloadazcopy-v10-linux \
   && tar -zxf /tmp/azcopy.tgz -C /tmp \
   && mv /tmp/azcopy_linux_amd64_*/azcopy /usr/local/bin/ \
   && chmod 755 /usr/local/bin/azcopy
-# fixes azure-cli dependencies
-RUN python3 -m pip install --upgrade requests; python3 -m pip install ansible-modules-hashivault
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bsdmainutils
 RUN SOPS_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/sops/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
   && curl -LO https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb \
   && dpkg -i sops_${SOPS_VERSION}_amd64.deb && rm sops_${SOPS_VERSION}_amd64.deb
@@ -63,6 +57,14 @@ RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/re
   && tar -zxf age-${AGE_VERSION}-linux-amd64.tar.gz -C /tmp \
   && mv /tmp/age/age* /usr/local/bin/ \
   && rm -rf /tmp/age
+
+# fixes azure-cli dependencies
+RUN pip3 install ansible
+RUN pip3 install --upgrade cryptography \
+  && pip3 install --upgrade azure-cli \
+  && python3 -m easy_install --upgrade pyOpenSSL
+RUN python3 -m pip install --upgrade requests
+RUN python3 -m pip install ansible-modules-hashivault
 RUN pip3 install pymysql
 RUN pip3 install netaddr
 
