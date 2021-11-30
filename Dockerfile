@@ -28,6 +28,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   sshpass \
   vim \
   bsdmainutils \
+  moreutils \
   && echo "alias mc='mc -b'" > /etc/profile.d/00-aliases.sh \
   && sed -i '/%sudo/d' /etc/sudoers \
   && echo "%sudo   ALL=(ALL:ALL)  NOPASSWD: ALL" >> /etc/sudoers \
