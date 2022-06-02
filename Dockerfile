@@ -40,7 +40,7 @@ RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key
   && DEBIAN_FRONTEND=noninteractive apt update \
   && DEBIAN_FRONTEND=noninteractive apt -y install kubectl git terraform
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-RUN PACKER_VERSION=$(curl -s https://releases.hashicorp.com/packer/ | grep packer_ | cut -d / -f 3 | head -n 1) \
+RUN PACKER_VERSION=$(curl -s https://releases.hashicorp.com/packer/ | grep packer | cut -d "_" -f2 | cut -d "<" -f1 | head -n 1) \
   && curl -O https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
   && unzip -d /usr/local/bin packer_${PACKER_VERSION}_linux_amd64.zip
 RUN TERRAGRUNT_VERSION=$(curl --silent "https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")') \
