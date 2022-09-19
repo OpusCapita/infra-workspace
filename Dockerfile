@@ -33,6 +33,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   && sed -i '/%sudo/d' /etc/sudoers \
   && echo "%sudo   ALL=(ALL:ALL)  NOPASSWD: ALL" >> /etc/sudoers \
   && apt install -y --no-install-recommends python-netaddr
+
+# Ansible and azure CLI
+RUN pip3 install ansible \
+  && pip3 install --upgrade cryptography \
+  && pip3 install --upgrade azure-cli \
+  && python3 -m easy_install --upgrade pyOpenSSL \
+  && python3 -m pip install --upgrade requests \
+  && python3 -m pip install ansible-modules-hashivault \
+  && pip3 install pymysql \
+  && pip3 install netaddr
+
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - \
   && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list \
   && curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
@@ -58,16 +69,12 @@ RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/re
   && tar -zxf age-${AGE_VERSION}-linux-amd64.tar.gz -C /tmp \
   && mv /tmp/age/age* /usr/local/bin/ \
   && rm -rf /tmp/age
+RUN HELMIFY_VERSION=$(curl --silent "https://api.github.com/repos/arttor/helmify/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
+  && curl -LO https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_${HELMIFY_VERSION}_Linux_64-bit.tar.gz \
+  && tar -zxf helmify_${HELMIFY_VERSION}_Linux_64-bit.tar.gz -C /tmp \
+  && mv /tmp/helmify /usr/local/bin/ \
+  && rm -rf /tmp/helmify
 
-# fixes azure-cli dependencies
-RUN pip3 install ansible
-RUN pip3 install --upgrade cryptography \
-  && pip3 install --upgrade azure-cli \
-  && python3 -m easy_install --upgrade pyOpenSSL
-RUN python3 -m pip install --upgrade requests
-RUN python3 -m pip install ansible-modules-hashivault
-RUN pip3 install pymysql
-RUN pip3 install netaddr
 
 ARG USERNAME
 ARG UID
