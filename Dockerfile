@@ -18,6 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   locales \
   python3-jmespath \
   python3-requests \
+  python-is-python3
   net-tools \
   iputils-ping \
   lsb-release \
@@ -40,7 +41,8 @@ RUN pip3 install ansible \
   && pip3 install --upgrade azure-cli \
   && python3 -m easy_install --upgrade pyOpenSSL \
   && python3 -m pip install --upgrade requests \
-  && python3 -m pip install ansible-modules-hashivault \
+  && python3 -m pip install ansible-modules-hashivault==4.7.0 \
+  && python3 -m pip install hvac==0.11.2 \
   && pip3 install pymysql \
   && pip3 install netaddr
 
