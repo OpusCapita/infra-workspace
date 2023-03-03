@@ -18,7 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   locales \
   python3-jmespath \
   python3-requests \
-  python-is-python3
+  python-is-python3 \
   net-tools \
   iputils-ping \
   lsb-release \
