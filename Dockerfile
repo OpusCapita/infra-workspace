@@ -76,7 +76,10 @@ RUN HELMIFY_VERSION=$(curl --silent "https://api.github.com/repos/arttor/helmify
   && tar -zxf helmify_${HELMIFY_VERSION}_Linux_64-bit.tar.gz -C /tmp \
   && mv /tmp/helmify /usr/local/bin/ \
   && rm -rf /tmp/helmify
-
+RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.10.0/velero-v1.10.0-linux-amd64.tar.gz \
+  && tar -zxf velero-v1.10.0-linux-amd64.tar.gz -C /tmp \
+  && mv /tmp/velero-v1.10.0-linux-amd64/velero /usr/local/bin/ \
+  && rm -rf /tmp/velero-v1.10.0-linux-amd64
 
 ARG USERNAME
 ARG UID
