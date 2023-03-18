@@ -35,8 +35,8 @@ fi
 pushd "$MY_PATH"
 if [ "$1" == "build" ]; then
   docker-compose $@ && \
-  exec $WINPTY docker-compose run --rm main
+  exec $WINPTY docker-compose run --rm -e TERM -e COLORTERM main
 else
-  exec $WINPTY docker-compose run --rm main
+  exec $WINPTY docker-compose run --rm -e TERM -e COLORTERM main
 fi
 popd
