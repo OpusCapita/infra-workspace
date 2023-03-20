@@ -1,7 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 #
-# bash -c "$(curl https://github.com/OpusCapita/infra-workspace/raw/master/autoinstall.sh -H 'Cache-Control: no-cache' -L -s)"
+# bash -c "$(curl https://github.com/OpusCapita/infra-workspace/raw/master/autoinstall.sh -H 'Cache-Control: no-cache' -L -s)" -- clean
 #
+
+if [[ "$1" == "clean" ]]; then
+  rm -rf "$HOME/.oh-my-zsh"
+  rm -rf "$HOME/.zshrc"
+  rm -rf "$HOME/.p10k.zsh"
+fi
 
 # Install zsh.
 sudo apt install -y zsh;
