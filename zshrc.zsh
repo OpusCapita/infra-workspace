@@ -13,7 +13,7 @@ export LC_ALL='en_US.UTF-8'
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git zsh-completions )
+plugins=(git zsh-completions zsh-syntax-highlighting docker-compose docker ansible sudo)
 
 
 CASE_SENSITIVE="true"
@@ -48,3 +48,10 @@ bindkey "${terminfo[kRIT5]}" forward-word
 
 setopt HIST_IGNORE_ALL_DUPS
 setopt SHARE_HISTORY
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+  source /etc/profile.d/vte.sh
+fi
