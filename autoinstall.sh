@@ -13,7 +13,7 @@ fi
 sudo apt install -y zsh;
 
 # powerlevel10k
-sh -c "$(curl -s -L https://github.com/OpusCapita/zsh-in-docker/raw/master/zsh-in-docker.sh)" -- \
+sh -c "$(curl -s -L https://github.com/OpusCapita/zsh-in-docker/raw/OC/zsh-in-docker.sh)" -- \
     -a 'CASE_SENSITIVE="true"' \
     -p git \
     -p https://github.com/zsh-users/zsh-completions \
