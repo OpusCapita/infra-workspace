@@ -63,8 +63,8 @@ RUN curl -L -o /tmp/azcopy.tgz -s https://aka.ms/downloadazcopy-v10-linux \
   && tar -zxf /tmp/azcopy.tgz -C /tmp \
   && mv /tmp/azcopy_linux_amd64_*/azcopy /usr/local/bin/ \
   && chmod 755 /usr/local/bin/azcopy
-RUN SOPS_VERSION=$(curl --silent "https://api.github.com/repos/mozilla/sops/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
-  && curl -LO https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb \
+RUN SOPS_VERSION=$(curl --silent "https://api.github.com/repos/getsops/sops/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
+  && curl -LO https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb \
   && dpkg -i sops_${SOPS_VERSION}_amd64.deb && rm sops_${SOPS_VERSION}_amd64.deb
 RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/releases" | jq -r .[0].tag_name) \
   && curl -LO https://github.com/FiloSottile/age/releases/download/${AGE_VERSION}/age-${AGE_VERSION}-linux-amd64.tar.gz \
@@ -72,8 +72,8 @@ RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/re
   && mv /tmp/age/age* /usr/local/bin/ \
   && rm -rf /tmp/age
 RUN HELMIFY_VERSION=$(curl --silent "https://api.github.com/repos/arttor/helmify/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
-  && curl -LO https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_${HELMIFY_VERSION}_Linux_64-bit.tar.gz \
-  && tar -zxf helmify_${HELMIFY_VERSION}_Linux_64-bit.tar.gz -C /tmp \
+  && curl -LO https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_Linux_x86-64.tar.gz \
+  && tar -zxf hhelmify_Linux_x86-64.tar.gz -C /tmp \
   && mv /tmp/helmify /usr/local/bin/ \
   && rm -rf /tmp/helmify
 RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.10.0/velero-v1.10.0-linux-amd64.tar.gz \

@@ -7,6 +7,7 @@ export CONTAINER_NAME="${MY_PARENT}"
 
 export xUID=$(id -u)
 export xGID=$(id -g)
+[[ -z "$USERNAME" ]] && export USERNAME="$USER"
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
