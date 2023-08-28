@@ -72,8 +72,8 @@ RUN AGE_VERSION=$(curl --silent "https://api.github.com/repos/FiloSottile/age/re
   && mv /tmp/age/age* /usr/local/bin/ \
   && rm -rf /tmp/age
 RUN HELMIFY_VERSION=$(curl --silent "https://api.github.com/repos/arttor/helmify/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') \
-  && curl -LO https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_Linux_x86-64.tar.gz \
-  && tar -zxf hhelmify_Linux_x86-64.tar.gz -C /tmp \
+  && curl -LO https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_Linux_x86_64.tar.gz \
+  && tar -zxf helmify_Linux_x86_64.tar.gz -C /tmp \
   && mv /tmp/helmify /usr/local/bin/ \
   && rm -rf /tmp/helmify
 RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.10.0/velero-v1.10.0-linux-amd64.tar.gz \
