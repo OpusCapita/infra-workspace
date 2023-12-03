@@ -118,6 +118,11 @@ ENV TERM=xterm-256color
 ENV COLORTERM=truecolor
 # END ZSH
 
+RUN curl -fsSL https://get.docker.com | sh
+RUN sudo usermod -a -G docker $USERNAME
+
+RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
 USER $USERNAME
 WORKDIR /home/$USERNAME
 ENTRYPOINT ["/bin/bash","/opt/bootstrap.sh"]

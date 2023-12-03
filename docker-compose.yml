@@ -19,4 +19,5 @@ services:
     - "/mnt:/mnt"
     - "/etc/hosts:/etc/hosts"
     - "/home/$USERNAME/.bash_history:/home/$USERNAME/.bash_history"
+    - "/var/run/docker.sock:/var/run/docker.sock"
     container_name: "${CONTAINER_NAME:?run only with a ./start.sh. because variables are defined there.}"
