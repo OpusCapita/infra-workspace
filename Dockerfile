@@ -46,8 +46,17 @@ RUN pip3 install ansible \
   && pip3 install pymysql \
   && pip3 install netaddr
 
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - \
-  && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list \
+RUN
+
+#RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - \
+#  && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list \
+#  && curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
+#  && apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+#  && DEBIAN_FRONTEND=noninteractive apt update \
+#  && DEBIAN_FRONTEND=noninteractive apt -y install kubectl git terraform
+RUN sudo mkdir /etc/apt/keyrings/ \
+  && echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list \
+  && curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg \
   && curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
   && apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
   && DEBIAN_FRONTEND=noninteractive apt update \
