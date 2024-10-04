@@ -9,6 +9,8 @@ export xUID=$(id -u)
 export xGID=$(id -g)
 [[ -z "$USERNAME" ]] && export USERNAME="$USER"
 
+export BUILDKIT_PROGRESS=plain
+
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -22,7 +24,7 @@ if [ "$machine" == "Windows" ] ; then
   WINPTY="winpty"
 else
   if [ $(id -u) -eq "0" ]; then
-    echo "Doesn't work when launhed as root."
+    echo "Doesn't work when launched as root."
     exit 1
   fi
 
@@ -35,9 +37,14 @@ fi
 
 pushd "$MY_PATH"
 if [ "$1" == "build" ]; then
-  docker-compose $@ && \
-  exec $WINPTY docker-compose run --rm -e TERM -e COLORTERM main
+  if [ "$2" == "base" ]; then
+    cd base-image
+    docker build -t opuscapita/andariel-devops:latest . || exit 1
+    cd ..
+  fi
+  docker-compose --ansi=never build && \
+  exec $WINPTY docker-compose --ansi=never run --rm -e TERM -e COLORTERM main
 else
-  exec $WINPTY docker-compose run --rm -e TERM -e COLORTERM main
+  exec $WINPTY docker-compose --ansi=never run --rm -e TERM -e COLORTERM main
 fi
 popd

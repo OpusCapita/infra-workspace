@@ -13,6 +13,8 @@ services:
         USERNAME: "$USERNAME"
         UID: "${xUID:?run only with a ./start.sh. because variables are defined there.}"
         GID: "${xGID:?run only with a ./start.sh. because variables are defined there.}"
+    cap_add:
+      - IPC_LOCK
     volumes:
     - "~:$MY_HOMEPATH"
     - "$SSH_AUTH_SOCK:/ssh-agent"
@@ -21,3 +23,4 @@ services:
     - "/home/$USERNAME/.bash_history:/home/$USERNAME/.bash_history"
     - "/var/run/docker.sock:/var/run/docker.sock"
     container_name: "${CONTAINER_NAME:?run only with a ./start.sh. because variables are defined there.}"
+    
