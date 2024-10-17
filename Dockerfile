@@ -1,4 +1,4 @@
-FROM opuscapita/andariel-devops:latest
+FROM opuscapita/toolbox:latest
 
 ARG USERNAME
 ARG UID
@@ -7,6 +7,7 @@ ARG GID
 RUN sed -i '/history-search-backward/s/^# //g' /etc/inputrc ; \
   sed -i '/history-search-forward/s/^# //g' /etc/inputrc ; \
   groupadd -g $GID $USERNAME \
+  && addgroup docker || true \
   && useradd -d /home/$USERNAME -m -s /bin/zsh -g $GID -u $UID $USERNAME \
   && usermod -aG sudo $USERNAME \
   && usermod -a -G docker $USERNAME
