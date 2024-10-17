@@ -37,11 +37,7 @@ fi
 
 pushd "$MY_PATH"
 if [ "$1" == "build" ]; then
-  if [ "$2" == "base" ]; then
-    cd base-image
-    docker build -t opuscapita/andariel-devops:latest . || exit 1
-    cd ..
-  fi
+  docker pull opuscapita/toolbox:latest && \
   docker-compose --ansi=never build && \
   exec $WINPTY docker-compose --ansi=never run --rm -e TERM -e COLORTERM main
 else
