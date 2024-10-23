@@ -7,6 +7,7 @@ export CONTAINER_NAME="${MY_PARENT}"
 
 export xUID=$(id -u)
 export xGID=$(id -g)
+export xGID_DOCKER=$(stat -c '%g' /var/run/docker.sock)
 [[ -z "$USERNAME" ]] && export USERNAME="$USER"
 
 export BUILDKIT_PROGRESS=plain
