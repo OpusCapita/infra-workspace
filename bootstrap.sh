@@ -37,11 +37,12 @@ usermod -a -G docker $USERNAME
 cd "$WORKDIR"
 
 [[ -f "$WORKDIR/one_password_secret.sh" ]] && source "$WORKDIR/one_password_secret.sh" || echo "No one_password_secret.sh found.
-Format is:
+File should contain:
+'''
 export OP_CONNECT_HOST=http://opconnect.aks.dev.bnp.it.opuscapita.com:8080
-export OP_CONNECT_TOKEN=xXxXxXXx
-
-one_password_secret.sh should be in the root of the repo.
+export OP_CONNECT_TOKEN=xXxXxXXx VERY LONG TOKEN xXxXxxXxx
+'''
+one_password_secret.sh should be in the root of the repo: $WORKDIR/one_password_secret.sh
 "
 
 [[ ! -f "$HOME/.zshrc" ]]  && { exec sudo -Eu $USERNAME /bin/bash; exit $?; }
