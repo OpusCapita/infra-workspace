@@ -59,5 +59,4 @@ bootstrap() {
 }
 
 [[ -f "$HOME/.start_zsh" ]] && bootstrap && rm -f "$HOME/.start_zsh"
-
-exec sudo -Eu $USERNAME /bin/zsh
+exec sudo -Eu $USERNAME "PATH=$PATH" /bin/zsh
