@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eo pipefail
+set -e
 
 export HOME=/home/$USERNAME
 
@@ -45,7 +45,7 @@ export OP_CONNECT_TOKEN=xXxXxXXx VERY LONG TOKEN xXxXxxXxx
 one_password_secret.sh should be in the root of the repo: $WORKDIR/one_password_secret.sh
 "
 
-[[ ! -f "$HOME/.zshrc" ]]  && { exec sudo -Eu $USERNAME /bin/bash; exit $?; }
+[[ ! -f "$HOME/.zshrc" && ! -f "$HOME/.start_zsh" ]]  && { exec sudo -Eu $USERNAME /bin/bash; exit $?; }
 
 bootstrap() {
   cp -r /opt/zsh/.zshrc /opt/zsh/.p10k.zsh /opt/zsh/.oh-my-zsh "$HOME"/
