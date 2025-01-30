@@ -40,7 +40,7 @@ cd "$WORKDIR"
 File should contain:
 '''
 export OP_CONNECT_HOST=http://opconnect.aks.dev.bnp.it.opuscapita.com:8080
-export OP_CONNECT_TOKEN=xXxXxXXx VERY LONG TOKEN xXxXxxXxx
+export OP_CONNECT_TOKEN=<<< find in onepassword: Andariel/bnp-one-password, field: token >>>
 '''
 one_password_secret.sh should be in the root of the repo: $WORKDIR/one_password_secret.sh
 "
