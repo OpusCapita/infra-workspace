@@ -12,6 +12,8 @@ fi
 # Install zsh.
 sudo apt install -y zsh;
 
+## todo: get files locally to this repo instead of fetching it from internet
+
 # powerlevel10k
 sh -c "$(curl -s -L https://github.com/OpusCapita/zsh-in-docker/raw/OC/zsh-in-docker.sh)" -- \
     -a 'CASE_SENSITIVE="true"' \
