@@ -10,16 +10,21 @@ services:
       PATH: "$MY_PATH/../bin:$MY_PATH/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$MY_HOMEPATH/.local/bin"
       WORKDIR: "$MY_PATH/../"
       EDITOR: nano
+      DISPLAY: "${DISPLAY:-host.docker.internal:0}"
+      XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR:-/tmp/runtime-$USERNAME}"
     build:
       context: .
     cap_add:
       - IPC_LOCK
     volumes:
-    - "~:$MY_HOMEPATH"
-    - "$SSH_AUTH_SOCK:/ssh-agent"
-    - "/mnt:/mnt"
-    - "/etc/hosts:/etc/hosts"
-    - "/home/$USERNAME/.bash_history:/home/$USERNAME/.bash_history"
-    - "/var/run/docker.sock:/var/run/docker.sock"
+      - "~:$MY_HOMEPATH"
+      - "$SSH_AUTH_SOCK:/ssh-agent"
+      - "/mnt:/mnt"
+      - "/etc/hosts:/etc/hosts"
+      - "/home/$USERNAME/.bash_history:/home/$USERNAME/.bash_history"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}:rw"
     container_name: "${CONTAINER_NAME:?run only with a ./start.sh. because variables are defined there.}"
+    network_mode: "host"
     

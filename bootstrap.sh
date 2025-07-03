@@ -28,11 +28,12 @@ if getent group $GID_DOCKER >/dev/null && [ "$CUR_GROUP" != "docker" ]; then
     groupadd -g $GID_DOCKER docker
 fi
 
-
+getent passwd $UID > /dev/null && userdel $(getent passwd $UID | cut -f1 -d:) || true
+getent group $GID  > /dev/null && groupdel $(getent group $GID | cut -f1 -d:) || true
 groupadd -g $GID $USERNAME
 useradd -d $HOME -M -s /bin/zsh -g $GID -u $UID $USERNAME
 usermod -aG sudo $USERNAME
-usermod -a -G docker $USERNAME
+usermod -aG docker $USERNAME
 
 cd "$WORKDIR"
 
