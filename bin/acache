@@ -8,12 +8,12 @@ function sha1key() {
 }
 
 function cache_prefix() {
-  echo -n $(sha1key "azure_rm_cache")
+  echo -n $(sha1key "azure.azcollection.azure_rm")
   echo -n s_
   echo -n $(sha1key "$PWD/$ANSIBLE_INVENTORY")
 }
 
-file="${ANSIBLE_CACHE_PLUGIN_CONNECTION}/ansible_inventory_azure_rm_cache_$(cache_prefix)"
+file="${ANSIBLE_CACHE_PLUGIN_CONNECTION}/ansible_inventory_azure*_$(cache_prefix)"
 
 echo Removing: ansible/$file
 rm -f $file
