@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pushd $WORKDIR/ansible/ > /dev/null
-
 function sha1key() {
   A=$(echo -n "$1" | sha1sum)
   echo -n ${A:0:5}
@@ -10,12 +8,28 @@ function sha1key() {
 function cache_prefix() {
   echo -n $(sha1key "azure.azcollection.azure_rm")
   echo -n s_
-  echo -n $(sha1key "$PWD/$ANSIBLE_INVENTORY")
+  echo -n $(sha1key "$PWD/ansible/$ANSIBLE_INVENTORY")
 }
 
-file="${ANSIBLE_CACHE_PLUGIN_CONNECTION}/ansible_inventory_azure*_$(cache_prefix)"
+if [ -z "$ANSIBLE_INVENTORY" ] || [ -z "$WORKDIR" ]; then
+  echo "forgot '. adev' ?"
+  exit 1
+fi
 
-echo Removing: ansible/$file
-rm -f $file
+# Enable bash-like globbing in zsh
+if [ -n "$ZSH_VERSION" ]; then
+  setopt globsubst
+fi
 
-popd > /dev/null
+pushd $WORKDIR > /dev/null
+
+file="ansible/${ANSIBLE_CACHE_PLUGIN_CONNECTION}/ansible_inventory_azure*_$(cache_prefix)"
+
+ls $file && {
+  echo Removing...
+  rm -f $file
+} || {
+  echo "No cache file found"
+}
+
+popd > /dev/null 2>&1
